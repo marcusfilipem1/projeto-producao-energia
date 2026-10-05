@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Produção de Energia no Brasil — Projeto G1</title>
+  <meta name="description" content="Análise e visualização de dados sobre a produção de energia no Brasil (2015–2024) com Python, Pandas, Plotly, Seaborn e Streamlit.">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+  <header>
+    <span class="tag">Projeto G1 · Tema 6</span>
+    <h1>Produção de Energia no Brasil (2015–2024)</h1>
+    <p>Análise e visualização de dados com Python, Pandas, Plotly, Matplotlib, Seaborn, SQLAlchemy e Streamlit</p>
+    <div class="cta">
+      <a class="button" href="https://projeto-producao-energia.streamlit.app/" target="_blank" rel="noopener">Abrir dashboard</a>
+      <a class="button secondary" href="https://github.com/marcusfilipem1/projeto-producao-energia" target="_blank" rel="noopener">Código no GitHub</a>
+    </div>
+  </header>
+
+  <div class="autoria">
+    <dl>
+      <div><dt>Disciplina</dt><dd>Linguagem de Programação — Análise e Visualização de Dados com Python</dd></div>
+      <div><dt>Professor</dt><dd>Alexandre Neves Louzada</dd></div>
+      <div><dt>Aluno</dt><dd>Enzo Ribas Torres</dd></div>
+    </dl>
+  </div>
+
+  <main>
+
+    <section>
+      <h2>Sobre o projeto</h2>
+      <p>
+        A produção de energia é um dos principais indicadores de desenvolvimento econômico e de infraestrutura de um país.
+        Este projeto analisa a produção e o consumo de energia no Brasil entre <strong>2015 e 2024</strong>, a partir de uma
+        base simulada com <strong>14.400 registros mensais</strong> de 20 estados e 6 fontes: hidrelétrica, eólica, solar,
+        biomassa, nuclear e termelétrica.
+      </p>
+      <p>
+        O trabalho cobre o fluxo completo de um projeto analítico: tratamento dos dados, engenharia de atributos,
+        integração com a API do IBGE, persistência em banco relacional, análise exploratória, KPIs, visualizações,
+        dashboard interativo e publicação.
+      </p>
+    </section>
+
+    <section>
+      <h2>Perguntas orientadoras</h2>
+      <ul>
+        <li>Quais fontes energéticas predominam no Brasil?</li>
+        <li>Quais regiões produzem mais energia?</li>
+        <li>Houve crescimento da energia renovável?</li>
+        <li>Existe sazonalidade na geração?</li>
+        <li>Quais estados possuem maior produção?</li>
+        <li>Há redução da dependência hidrelétrica?</li>
+        <li>Como a matriz energética evoluiu ao longo do tempo?</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Indicadores-chave</h2>
+      <div class="grid">
+        <div class="kpi"><div class="label">Produção total de energia</div><div class="value">571,8 TWh</div><div class="note">cresce 4,22% ao ano</div></div>
+        <div class="kpi"><div class="label">Fonte predominante</div><div class="value">Hidrelétrica</div><div class="note">37,1% da produção</div></div>
+        <div class="kpi"><div class="label">Percentual renovável</div><div class="value">78,1%</div><div class="note">nuclear tratada como não renovável</div></div>
+        <div class="kpi"><div class="label">Estado com maior produção</div><div class="value">Espírito Santo</div><div class="note">28,8 TWh · empate técnico com SP</div></div>
+        <div class="kpi"><div class="label">Consumo total</div><div class="value">543,0 TWh</div><div class="note">produção cobre 105,3% do consumo</div></div>
+        <div class="kpi"><div class="label">Emissão total de CO₂</div><div class="value">87,3 Mt</div><div class="note">153 kg de CO₂ por MWh</div></div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Principais resultados</h2>
+
+      <div class="achado">
+        <div>
+          <h3>Hidrelétrica lidera uma matriz majoritariamente renovável</h3>
+          <p>
+            A hidrelétrica gera <strong>37,1%</strong> da energia, seguida por termelétrica (18,5%), eólica (16,4%),
+            solar (14,4%), biomassa (10,3%) e nuclear (3,4%). As renováveis somam <strong>78,1%</strong>.
+          </p>
+          <div class="legenda">
+            <span class="hid">Hidrelétrica</span><span class="eol">Eólica</span><span class="sol">Solar</span>
+            <span class="bio">Biomassa</span><span class="nuc">Nuclear</span><span class="ter">Termelétrica</span>
+          </div>
+        </div>
+        <img src="imagens/matriz_fontes.png" alt="Barras de produção por fonte e rosca da matriz energética: hidrelétrica 37,1%, termelétrica 18,5%, eólica 16,4%, solar 14,4%, biomassa 10,3% e nuclear 3,4%." loading="lazy">
+      </div>
+
+      <div class="achado">
+        <div>
+          <h3>Produção cresce, mas a matriz não muda</h3>
+          <p>
+            A produção passou de 46,7 para 67,7 TWh por ano (<strong>+45%</strong>). A energia renovável cresceu no
+            mesmo ritmo, então sua participação ficou em <strong>78%</strong> do início ao fim, e a dependência
+            hidrelétrica caiu só 0,38 p.p.
+          </p>
+        </div>
+        <img src="imagens/evolucao_matriz.png" alt="Barras empilhadas da participação de cada fonte por ano, de 2015 a 2024, praticamente iguais em todos os anos." loading="lazy">
+      </div>
+
+      <div class="achado">
+        <div>
+          <h3>A termelétrica concentra as emissões</h3>
+          <p>
+            A termelétrica emite <strong>650 kg de CO₂ por MWh</strong>, 16 vezes as demais fontes. Com 18,5% da produção,
+            responde por <strong>78,6% do CO₂</strong>. As emissões subiram 48,8% em dez anos.
+          </p>
+        </div>
+        <img src="imagens/impacto_ambiental.png" alt="Dispersão de emissão contra produção, em que a termelétrica forma uma reta muito mais inclinada, e barras comparando participação na produção e nas emissões." loading="lazy">
+      </div>
+
+      <div class="achado">
+        <div>
+          <h3>Sem sazonalidade e sem diferença entre estados</h3>
+          <p>
+            Os meses variam só 2% e o padrão não se repete entre os anos. Os estados produzem volumes quase iguais
+            (28,3 a 28,8 TWh); o Nordeste lidera entre as regiões apenas por ter mais estados na base.
+          </p>
+        </div>
+        <img src="imagens/sazonalidade.png" alt="Mapa de calor do índice sazonal por ano e mês, com valores entre 0,96 e 1,04 sem padrão repetido." loading="lazy">
+      </div>
+    </section>
+
+    <section>
+      <h2>Dashboard interativo</h2>
+      <p>
+        O dashboard em Streamlit tem <strong>8 páginas</strong>, gráficos interativos em <strong>Plotly</strong> e filtros
+        globais por ano, mês, região, estado, fonte de energia e nível de demanda. KPIs, gráficos e textos interpretativos
+        se atualizam com o recorte escolhido.
+      </p>
+      <div class="grid">
+        <div class="card"><h3>Visão geral</h3><p>Descrição do problema, 6 KPIs, destaques e resumo da conclusão.</p></div>
+        <div class="card"><h3>Evolução e sazonalidade</h3><p>Linha temporal, área por fonte, crescimento anual e índice sazonal.</p></div>
+        <div class="card"><h3>Fontes e matriz</h3><p>Barras por fonte, pizza da matriz, evolução da participação e crescimento por fonte.</p></div>
+        <div class="card"><h3>Regiões e estados</h3><p>Mapa interativo com malha do IBGE, ranking estadual e comparação regional.</p></div>
+        <div class="card"><h3>Produção × consumo</h3><p>Dispersão consumo × produção, saldo por estado e nível de demanda.</p></div>
+        <div class="card"><h3>Impacto ambiental</h3><p>Dispersão emissão × produção, fator de emissão e matriz de correlação.</p></div>
+        <div class="card"><h3>Explorar dados e SQL</h3><p>Tabela dinâmica, consultas SQL no SQLite e download da base filtrada.</p></div>
+        <div class="card"><h3>Conclusão executiva</h3><p>Respostas às perguntas orientadoras, recomendações e limitações.</p></div>
+      </div>
+      <p class="acao">
+        <a class="button" href="https://projeto-producao-energia.streamlit.app/" target="_blank" rel="noopener">Acessar dashboard Streamlit</a>
+      </p>
+    </section>
+
+    <section>
+      <h2>Funcionalidades implementadas</h2>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Funcionalidade</th><th>Como foi feita</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Gráficos avançados com Plotly</strong></td><td>Área empilhada, barras 100%, rosca, dispersão com WebGL e tooltips unificados.</td></tr>
+            <tr><td><strong>Mapas interativos</strong></td><td>Mapa coroplético com Plotly e GeoJSON do IBGE (produção, saldo ou CO₂).</td></tr>
+            <tr><td><strong>Consumo de API</strong></td><td>Requests na API de dados do IBGE: estados e malha geográfica, com cópia local de contingência.</td></tr>
+            <tr><td><strong>Persistência em banco</strong></td><td>SQLite gerado com SQLAlchemy a partir da base tratada.</td></tr>
+            <tr><td><strong>Modelagem relacional</strong></td><td>ORM com 4 tabelas: regiões → estados → medições ← fontes de energia.</td></tr>
+            <tr><td><strong>Dashboard multipágina</strong></td><td><code>st.navigation</code> com 8 páginas e filtros globais compartilhados.</td></tr>
+            <tr><td><strong>Séries temporais e correlação</strong></td><td>Crescimento composto, tendência linear (NumPy), média móvel, índice sazonal e Pearson/Spearman.</td></tr>
+            <tr><td><strong>Interatividade</strong></td><td>6 filtros, upload de CSV, tabela dinâmica configurável, editor SQL somente leitura e downloads.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section>
+      <h2>Tratamento dos dados</h2>
+      <ul>
+        <li>Verificação de nulos, duplicados por estado × fonte × mês, datas e valores negativos (nenhum problema encontrado).</li>
+        <li><strong>452 valores no piso artificial de 100 MWh</strong> (nuclear e biomassa) sinalizados: somam menos de 0,01% da produção.</li>
+        <li><strong>Nuclear reclassificada como não renovável</strong>: o CSV atribuía 95% renovável a ela.</li>
+        <li>Regra do nível de demanda confirmada: faixas da razão consumo ÷ produção (0,85 · 1,00 · 1,12).</li>
+        <li>Novos atributos: saldo, índice de demanda, fator de emissão, classe da fonte, período hidrológico, nome e código IBGE.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Tecnologias utilizadas</h2>
+      <ul class="chips">
+        <li>Python</li><li>Pandas</li><li>NumPy</li><li>Plotly</li><li>Matplotlib</li><li>Seaborn</li>
+        <li>Streamlit</li><li>SQLAlchemy</li><li>SQLite</li><li>Requests</li><li>API IBGE</li><li>GitHub Pages</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Arquivos do projeto</h2>
+<pre>projeto-producao-energia/
+├── app.py                  # entrada do dashboard (dados, filtros, navegação)
+├── paginas/                # 8 páginas do dashboard
+├── src/                    # limpeza, API IBGE, banco, KPIs e gráficos
+├── requirements.txt
+├── README.md
+├── index.html              # esta página
+├── css/style.css           # estilos da página
+├── dados/                  # CSV original, CSV tratado e cache do IBGE
+├── database/               # producao_energia.sqlite
+├── notebooks/              # analise_producao_energia.ipynb
+└── imagens/                # gráficos exportados pelo notebook</pre>
+      <p>
+        <a class="button" href="https://github.com/marcusfilipem1/projeto-producao-energia#readme" target="_blank" rel="noopener">Ver README</a>
+        <a class="button secondary" href="https://github.com/marcusfilipem1/projeto-producao-energia/blob/main/notebooks/analise_producao_energia.ipynb" target="_blank" rel="noopener">Ver notebook</a>
+        <a class="button secondary" href="dados/simulacao_producao_energia_brasil.csv" download>Baixar base de dados</a>
+        <a class="button secondary" href="https://github.com/marcusfilipem1/projeto-producao-energia/blob/main/app.py" target="_blank" rel="noopener">Ver app.py</a>
+      </p>
+    </section>
+
+    <section>
+      <h2>Conclusão</h2>
+      <p>
+        A produção de energia cresce de forma contínua (4,22% ao ano) e cobre o consumo com folga. A matriz é 78% renovável
+        e liderada pela hidrelétrica, mas <strong>não está se transformando</strong>: as participações das fontes ficaram
+        praticamente iguais em dez anos. O ponto de atenção é o <strong>impacto ambiental</strong>: a termelétrica cresceu
+        no mesmo ritmo das renováveis, e as emissões subiram quase 49%. Descarbonizar exige que eólica e solar
+        <strong>substituam</strong> a geração térmica, não apenas se somem a ela.
+      </p>
+      <p><em>Base de dados simulada, usada para fins educacionais. Correlação não implica causalidade.</em></p>
+    </section>
+
+  </main>
+
+  <footer>
+    <p><strong>Projeto G1 — Produção de Energia no Brasil</strong></p>
+    <p>Linguagem de Programação — Análise e Visualização de Dados com Python</p>
+    <p>Professor: Alexandre Neves Louzada · Aluno: Enzo Ribas Torres</p>
+  </footer>
+
+</body>
+</html>
